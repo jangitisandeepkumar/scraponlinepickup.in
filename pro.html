@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Scrap | Profile</title>
+  <link rel="stylesheet" href="pro.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <style>
+    .profile-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px;
+    }
+
+    .profile-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .user-icon {
+      font-size: 80px;
+      color: #00aaff;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .profile-card input {
+      font-size: 16px;
+      padding: 6px;
+      width: 100%;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .profile-card p {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .profile-card button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .save-btn {
+      background-color: #17a2b8;
+      color: white;
+      display: none;
+    }
+
+    .login-btn { background-color: #28a745; color: white; }
+    .logout-btn { background-color: #dc3545; color: white; }
+    .issue-btn { background-color: #ffc107; color: black; }
+    .history-btn { background-color: #007bff; color: white; }
+
+    .profile-card button:hover { opacity: 0.9; }
+
+    .footer {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #f5f5f5;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="iron.html" class="logo">Online Scrap</a>
+    </div>
+  </header>
+
+  <main class="profile-container">
+    <div class="profile-card">
+      <i class="fa-solid fa-user-circle user-icon" id="editToggle"></i>
+      <h2 id="welcome">Welcome, Guest</h2>
+      <p id="phone"><strong>Phone:</strong> -</p>
+      <input type="text" id="editPhone" placeholder="Edit Phone"/>
+
+      <p id="address"><strong>Address:</strong> -</p>
+      <input type="text" id="editAddress" placeholder="Edit Address"/>
+
+ 
+      <button class="history-btn" onclick="window.location.href='history.html'">📜 View Pickup History</button>
+      <button class="login-btn">🔐 Login</button>
+      <button class="logout-btn" onclick="window.location.href='logout.html'">🚪 Logout</button>
+      <button class="issue-btn" onclick="window.location.href='issue.html'">❓ Having Issue?</button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2024 Online Scrap. All Rights Reserved.</p>
+    <script type="module" src="pro.js"></script>
+  </footer>
+</body>
+</html>

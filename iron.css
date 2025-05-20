@@ -1,0 +1,236 @@
+/* ========== General Styles ========== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* ========== Header ========== */
+.header {
+    background-color: #390153;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    position: relative;
+}
+
+/* Logo */
+.header .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    color: white;
+    z-index: 1000;
+}
+
+/* Navigation Menu */
+.navigation ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.navigation li {
+    display: inline;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+.navigation a:hover {
+    border-bottom: 2px solid white;
+}
+
+/* Dark Mode Toggle Button */
+#darkModeToggle {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    background-color: white;
+    color: #390153;
+    border: none;
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+#darkModeToggle:hover {
+    background-color: #ddd;
+}
+
+/* ========== Features Section ========== */
+.features-section {
+    padding: 50px 0;
+    text-align: center;
+    background-color: #fff;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.features-container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.features-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.feature-box {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    text-align: center;
+}
+
+.feature-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.feature-box h3 {
+    font-size: 1.5rem;
+    color: #390153;
+    margin-bottom: 10px;
+}
+
+.feature-box p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* ========== Footer ========== */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* ========== Dark Mode ========== */
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+.dark-mode .features-section {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.dark-mode .feature-box {
+    background: #2c2c2c;
+    color: white;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .footer {
+    background-color: #222;
+}
+
+.dark-mode #darkModeToggle {
+    background-color: #444;
+    color: white;
+}
+
+.dark-mode .feature-box h3,
+.dark-mode .feature-box p {
+    color: white;
+}
+
+/* ========== Responsive Design ========== */
+@media (max-width: 992px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hamburger-menu {
+        font-size: 28px;
+        left: 15px;
+        top: 15px;
+    }
+
+    .navigation ul {
+        flex-direction: column;
+        align-items: center;
+        background-color: #390153;
+        padding: 10px 0;
+        display: none;
+        gap: 15px;
+    }
+
+    .navigation ul.active {
+        display: flex;
+    }
+
+    .features-title {
+        font-size: 1.5rem;
+    }
+
+    .feature-box h3 {
+        font-size: 1.3rem;
+    }
+
+    .feature-box p {
+        font-size: 0.95rem;
+    }
+
+    .footer {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .features-container {
+        padding: 0 10px;
+    }
+
+    .feature-box {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    body {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logged Out | Online Scrap</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .message-box {
+      text-align: center;
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #28a745;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="message-box">
+    <h1>You are logged out</h1>
+    <p>Redirecting to home page...</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
+      authDomain: "login-51a65.firebaseapp.com",
+      projectId: "login-51a65",
+      storageBucket: "login-51a65.appspot.com",
+      messagingSenderId: "1051725155986",
+      appId: "1:1051725155986:web:31ab5d15f993e9eee0e04b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Sign out the user
+    signOut(auth).then(() => {
+      // After 3 seconds, redirect to homepage
+      setTimeout(() => {
+        window.location.href = "iron.html";
+      }, 3000);
+    }).catch((error) => {
+      console.error("Logout error:", error);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analytics Dashboard | Online Scrap</title>
+  <link rel="stylesheet" href="analytics.css" />
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+    }
+    header {
+      background: #2c3e50;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h2 {
+      margin-top: 40px;
+      color: #2c3e50;
+    }
+    canvas {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Online Scrap Analytics Dashboard</h1>
+</header>
+
+<div class="container">
+  <h2>Pickup Distribution by Material Type</h2>
+  <canvas id="materialChart" height="200"></canvas>
+
+  <h2>Pickups Per Day</h2>
+  <canvas id="dailyChart" height="200"></canvas>
+
+  <h2>Pickups Per User</h2>
+  <canvas id="userChart" height="200"></canvas>
+
+  <h2>Monthly Pickup Trends</h2>
+  <canvas id="monthlyChart" height="200"></canvas>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="firebaseConfig.js"></script>
+<script type="module" src="analytics.js"></script>
+
+</body>
+</html>

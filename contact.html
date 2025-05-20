@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Schedule Pickup | Online Scrap</title>
+  <link rel="stylesheet" href="contact.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <a href="iron.html" class="logo">Online Scrap</a>
+      <nav class="navigation">
+        <ul>
+          <li><a href="iron.html">Home</a></li>
+          <li><a href="prices.html">Prices</a></li>
+          <li><a href="contact.html" class="active">Schedule Pickup</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="contact-section">
+    <div class="container">
+      <h1>Schedule Your Pickup</h1>
+      <form id="pickupForm" class="contact-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required placeholder="Enter your full name" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" required placeholder="Enter your phone number" />
+        </div>
+        <div class="form-group">
+          <label for="location">Select Your Location</label>
+          <select id="location" required>
+            <option value="">-- Select Your Location --</option>
+            <option value="HITEC City">HITEC City</option>
+            <option value="Gachibowli">Gachibowli</option>
+            <option value="Madhapur">Madhapur</option>
+            <option value="Jubilee Hills">Jubilee Hills</option>
+            <option value="Banjara Hills">Banjara Hills</option>
+            <option value="Kukatpally">Kukatpally</option>
+            <option value="Miyapur">Miyapur</option>
+            <option value="Serilingampally">Serilingampally</option>
+            <option value="Manikonda">Manikonda</option>
+            <option value="Nanakramguda">Nanakramguda</option>
+            <option value="Tolichowki">Tolichowki</option>
+            <option value="Kompally">Kompally</option>
+            <option value="LB Nagar">LB Nagar</option>
+            <option value="Suryapet">Suryapet</option>
+            <option value="Medchal">Medchal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Select Scrap Material Types (Choose one or more):</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="material" value="copper"> Copper</label>
+            <label><input type="checkbox" name="material" value="aluminum"> Aluminum</label>
+            <label><input type="checkbox" name="material" value="steel"> Steel</label>
+            <label><input type="checkbox" name="material" value="iron"> Iron</label>
+            <label><input type="checkbox" name="material" value="brass"> Brass</label>
+            <label><input type="checkbox" name="material" value="lead"> Lead</label>
+            <label><input type="checkbox" name="material" value="computer"> Computer</label>
+            <label><input type="checkbox" name="material" value="cardboard"> Cardboard</label>
+            <label><input type="checkbox" name="material" value="paper"> Paper</label>
+            <label><input type="checkbox" name="material" value="plastic"> Plastic</label>
+            <label><input type="checkbox" name="material" value="glass"> Glass</label>
+            <label><input type="checkbox" name="material" value="computer_wire"> Computer Wire</label>
+            <label><input type="checkbox" name="material" value="normal_wire"> Normal Wire</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="weight">Estimated Total Scrap Weight (kg)</label>
+          <input type="number" id="weight" required placeholder="Enter total weight in kg" />
+        </div>
+        <div class="form-group">
+          <label for="date">Preferred Pickup Date</label>
+          <input type="date" id="date" required />
+        </div>
+        <div class="form-group">
+          <label for="time">Preferred Pickup Time</label>
+          <input type="time" id="time" required />
+        </div>
+        <button type="submit">Submit Request</button>
+        <p id="successMessage" style="color:green; display:none; text-align:center; margin-top:20px;"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2024 Online Scrap. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Firebase Configuration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      Timestamp
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
+authDomain: "login-51a65.firebaseapp.com",
+projectId: "login-51a65",
+storageBucket: "login-51a65.appspot.com",
+messagingSenderId: "1051725155986",
+appId: "1:1051725155986:web:31ab5d15f993e9eee0e04b"
+};
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("pickupForm");
+    const successMessage = document.getElementById("successMessage");
+
+    const allowedLocations = [
+      "HITEC City", "Gachibowli", "Madhapur", "Jubilee Hills", "Banjara Hills",
+      "Kukatpally", "Miyapur", "Serilingampally", "Manikonda", "Nanakramguda",
+      "Tolichowki", "Kompally"
+    ];
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const location = document.getElementById("location").value;
+      const weight = document.getElementById("weight").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+
+      const selectedMaterials = Array.from(document.querySelectorAll('input[name="material"]:checked'))
+        .map(cb => cb.value);
+
+      if (!allowedLocations.includes(location)) {
+        alert("Pickup slots are not available in your area due to distance. Please choose a nearby location.");
+        return;
+      }
+
+      const [hour] = time.split(":").map(Number);
+      if (hour < 8 || hour >= 20) {
+        alert("Pickup time must be between 8:00 AM and 8:00 PM.");
+        return;
+      }
+
+      const formattedTime = new Date(`1970-01-01T${time}:00`).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+
+      try {
+        await addDoc(collection(db, "pickupRequests"), {
+          name,
+          email,
+          phone,
+          location,
+          selectedMaterials,
+          weight: parseFloat(weight),
+          preferredDate: date,
+          preferredTime: formattedTime,
+          timestamp: Timestamp.now()
+        });
+
+        successMessage.textContent = "Pickup request submitted successfully!";
+        successMessage.style.display = "block";
+        form.reset();
+      } catch (error) {
+        console.error("Error submitting request:", error);
+        alert("Something went wrong. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>

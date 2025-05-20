@@ -1,0 +1,134 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+.header {
+    background-color: #390153;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.header .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+/* Profile & Forms Containers */
+.profile-container,
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-top: 80px; /* Prevents overlap with fixed header */
+}
+
+/* Profile Card & Form Card */
+.profile-card,
+.form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* User Icon */
+.user-icon {
+    font-size: 80px;
+    color: #390153;
+    margin-bottom: 15px;
+}
+
+/* Profile Text */
+.profile-card h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.profile-card p {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+    text-align: center;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.login-btn {
+    background-color: #390153;
+    color: white;
+}
+
+.logout-btn {
+    background-color: #b22222;
+    color: white;
+}
+
+.issue-btn {
+    background-color: #ffa500;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: #5a027e;
+}
+
+.logout-btn:hover {
+    background-color: #d62828;
+}
+
+.issue-btn:hover {
+    background-color: #ff8c00;
+}
+
+/* Form Inputs */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}

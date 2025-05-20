@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup Confirmation</title>
+    <link rel="stylesheet" href="iron.css">
+
+    <!-- Google Fonts for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #3e8e41;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+        }
+        strong {
+            font-weight: 700;
+        }
+        .cancel-button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .cancel-button:hover {
+            background-color: #c0392b;
+        }
+        img {
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Pickup Scheduled Successfully!</h2>
+        <p><strong>Name:</strong> <span id="name">N/A</span></p>
+        <p><strong>Email:</strong> <span id="email">N/A</span></p>
+        <p><strong>Phone:</strong> <span id="phone">N/A</span></p>
+        <p><strong>Location:</strong> <span id="location">N/A</span></p>
+        <p><strong>Estimated Weight:</strong> <span id="weight">N/A</span> kg</p>
+        <p><strong>Pickup Date:</strong> <span id="pickup_date">N/A</span></p>
+        <p><strong>Pickup Time:</strong> <span id="pickup_time">N/A</span></p>
+
+        <p><strong>Uploaded Photo:</strong></p>
+        <img id="photo" src="" alt="Uploaded Scrap Photo" width="200" style="display: none;">
+
+        <button onclick="cancelPickup()" class="cancel-button">Cancel Pickup</button>
+    </div>
+
+    <script>
+        // Fetch pickup details from URL parameters
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('name').textContent = params.get('name') || "N/A";
+        document.getElementById('email').textContent = params.get('email') || "N/A";
+        document.getElementById('phone').textContent = params.get('phone') || "N/A";
+        document.getElementById('location').textContent = params.get('location') || "N/A";
+        document.getElementById('weight').textContent = params.get('weight') || "N/A";
+        document.getElementById('pickup_date').textContent = params.get('date') || "N/A";
+        document.getElementById('pickup_time').textContent = params.get('time') || "N/A";
+
+        // Show uploaded photo if available
+        const photoUrl = params.get('photo');
+        if (photoUrl) {
+            document.getElementById('photo').src = photoUrl;
+            document.getElementById('photo').style.display = "block";
+        }
+
+        function cancelPickup() {
+            if (confirm("Are you sure you want to cancel the pickup?")) {
+                // Placeholder for cancellation action
+                alert("Pickup cancelled!");
+            }
+        }
+    </script>
+
+</body>
+</html>

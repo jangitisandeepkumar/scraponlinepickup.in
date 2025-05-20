@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Scrap | Prices</title>
+    <link rel="stylesheet" href="price.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <a href="iron.html" class="logo">Online Scrap</a>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="iron.html">Home</a></li>
+                    <li><a href="prices.html">Prices</a></li>
+                    <li><a href="contact.html">Schedule Pickup</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                </ul>
+                <button id="darkModeToggle">🌙 Dark Mode</button>
+
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Search Box -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="search" placeholder="Search scrap material..." onkeyup="showSuggestions()">
+            </div>
+            <div id="suggestions"></div>
+        </div>
+
+        <section class="prices-section">
+            <div class="container">
+                <h2 class="section-title">Scrap Material Prices</h2>
+                <div class="material-grid" id="material-list">
+                    <!-- Boxes remain unchanged -->
+                    <div class="material-box" data-name="Copper" data-price="50">
+                        <i class="fa-solid fa-coins"></i>
+                        <h3>Copper</h3>
+                        <p>₹50 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Aluminum" data-price="20">
+                        <i class="fa-solid fa-industry"></i>
+                        <h3>Aluminum</h3>
+                        <p>₹20 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Steel" data-price="10">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        <h3>Steel</h3>
+                        <p>₹10 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Iron" data-price="5">
+                        <i class="fa-solid fa-bolt"></i>
+                        <h3>Iron</h3>
+                        <p>₹5 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Brass" data-price="30">
+                        <i class="fa-solid fa-gem"></i>
+                        <h3>Brass</h3>
+                        <p>₹30 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Lead" data-price="15">
+                        <i class="fa-solid fa-weight-hanging"></i>
+                        <h3>Lead</h3>
+                        <p>₹15 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Zinc" data-price="25">
+                        <i class="fa-solid fa-cube"></i>
+                        <h3>Zinc</h3>
+                        <p>₹25 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Tin" data-price="40">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <h3>Tin</h3>
+                        <p>₹40 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Nickel" data-price="60">
+                        <i class="fa-solid fa-microchip"></i>
+                        <h3>Nickel</h3>
+                        <p>₹60 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Plastic" data-price="5">
+                        <i class="fa-solid fa-recycle"></i>
+                        <h3>Plastic</h3>
+                        <p>₹5 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Glass" data-price="3">
+                        <i class="fa-solid fa-glass-whiskey"></i>
+                        <h3>Glass</h3>
+                        <p>₹3 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Paper" data-price="2">
+                        <i class="fa-solid fa-newspaper"></i>
+                        <h3>Paper</h3>
+                        <p>₹2 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Rubber" data-price="10">
+                        <i class="fa-solid fa-hand-rock"></i>
+                        <h3>Rubber</h3>
+                        <p>₹10 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Wood" data-price="8">
+                        <i class="fa-solid fa-tree"></i>
+                        <h3>Wood</h3>
+                        <p>₹8 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Electronics" data-price="50">
+                        <i class="fa-solid fa-plug"></i>
+                        <h3>Electronics</h3>
+                        <p>₹50 per kg</p>
+                    </div>
+                    <div class="material-box" data-name="Textiles" data-price="12">
+                        <i class="fa-solid fa-tshirt"></i>
+                        <h3>Textiles</h3>
+                        <p>₹12 per kg</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Online Scrap. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="price.js"></script>
+    <script src="darkmode.js"></script>
+
+</body>
+</html>
