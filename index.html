@@ -90,18 +90,16 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <p>© 2024 Online Scrap. All Rights Reserved.</p>
+      <p>&copy; 2024 Online Scrap. All Rights Reserved.</p>
     </div>
   </footer>
 
   <!-- Firebase SDK (Modular) -->
   <script type="module">
-    // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-    // Your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
       authDomain: "login-51a65.firebaseapp.com",
@@ -111,7 +109,6 @@
       appId: "1:1051725155986:web:31ab5d15f993e9eee0e04b"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -140,7 +137,7 @@
     });
   </script>
 
-  <!-- Redirect Hamburger to Profile -->
+  <!-- Redirect Hamburger to Profile Page -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const hamburger = document.querySelector(".hamburger-menu");
