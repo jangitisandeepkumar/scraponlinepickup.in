@@ -1,153 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Why Choose Online Scrap? | Online Scrap</title>
-  <link rel="stylesheet" href="iron.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Choose Online Scrap? | Online Scrap</title>
+    <link rel="stylesheet" href="iron.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 
-  
-  <header class="header">
-    <div class="container">
-      <h2 id="userGreeting">Welcome!</h2>
+    <header class="header">
+        <div class="container">
+           
+            <div class="hamburger-menu" onclick="goToProfilePage()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
 
-      
-      <div class="hamburger-menu">
-        <i class="fa-solid fa-bars"></i>
-      </div>
+            <a href="index.html" class="logo">Online Scrap</a> 
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="prices.html">Prices</a></li>
+                    <li><a href="contact.html">Schedule Pickup</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                </ul>
+            </nav>
 
-      <a href="index.html" class="logo">Online Scrap</a>
-
-      
-      <nav class="navigation">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="prices.html">Prices</a></li>
-          <li><a href="contact.html">Schedule Pickup</a></li>
-          <li><a href="aboutus.html">About Us</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  
-  <section class="features-section">
-    <div class="features-container">
-      <h2 class="features-title">Why Choose Online Scrap?</h2>
-      <div class="features-grid">
-        <div class="feature-box">
-          <i class="fa-solid fa-truck"></i>
-          <h3>Doorstep Pickup</h3>
-          <p>We collect scrap from your location at your convenience.</p>
+            
+            <button id="darkModeToggle">🌙 Dark Mode</button>
         </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-recycle"></i>
-          <h3>Eco-Friendly Disposal</h3>
-          <p>Recycling that helps reduce environmental impact.</p>
-        </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-hand-holding-dollar"></i>
-          <h3>Best Prices</h3>
-          <p>Get competitive market rates for your scrap.</p>
-        </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-clock"></i>
-          <h3>Quick Service</h3>
-          <p>Pickup within 24 hours of booking.</p>
-        </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-building"></i>
-          <h3>For Households & Businesses</h3>
-          <p>We serve both individual customers and industries.</p>
-        </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-check"></i>
-          <h3>Trusted by Thousands</h3>
-          <p>Over 10,000 satisfied customers across cities.</p>
-        </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-tree"></i>
-          <h3>Reducing Landfill Waste</h3>
-          <p>Helping create a cleaner and greener future.</p>
-        </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-credit-card"></i>
-          <h3>Multiple Payment Options</h3>
-          <p>Cash, UPI, or bank transfer—your choice.</p>
-        </div>
-        <div class="feature-box">
-          <i class="fa-solid fa-star"></i>
-          <h3>Top-Rated Service</h3>
-          <p>Rated 4.8/5 by our happy customers.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2024 Online Scrap. All Rights Reserved.</p>
-    </div>
-  </footer>
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2 class="features-title">Why Choose Online Scrap?</h2>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <i class="fa-solid fa-truck"></i>
+                    <h3>Doorstep Pickup</h3>
+                    <p>We collect scrap from your location at your convenience.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-recycle"></i>
+                    <h3>Eco-Friendly Disposal</h3>
+                    <p>Recycling that helps reduce environmental impact.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <h3>Best Prices</h3>
+                    <p>Get competitive market rates for your scrap.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-clock"></i>
+                    <h3>Quick Service</h3>
+                    <p>Pickup within 24 hours of booking.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-building"></i>
+                    <h3>For Households & Businesses</h3>
+                    <p>We serve both individual customers and industries.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-check"></i>
+                    <h3>Trusted by Thousands</h3>
+                    <p>Over 10,000 satisfied customers across cities.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-tree"></i>
+                    <h3>Reducing Landfill Waste</h3>
+                    <p>Helping create a cleaner and greener future.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <h3>Multiple Payment Options</h3>
+                    <p>Cash, UPI, or bank transfer—your choice.</p>
+                </div>
+                <div class="feature-box">
+                    <i class="fa-solid fa-star"></i>
+                    <h3>Top-Rated Service</h3>
+                    <p>Rated 4.8/5 by our happy customers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Online Scrap. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
-      authDomain: "login-51a65.firebaseapp.com",
-      projectId: "login-51a65",
-      storageBucket: "login-51a65.appspot.com",
-      messagingSenderId: "1051725155986",
-      appId: "1:1051725155986:web:31ab5d15f993e9eee0e04b"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const greetingEl = document.getElementById("userGreeting");
-
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const docRef = doc(db, "users", user.uid);
-          const docSnap = await getDoc(docRef);
-
-          if (docSnap.exists()) {
-            const name = docSnap.data().name || "User";
-            greetingEl.textContent = `Welcome, ${name}`;
-          } else {
-            greetingEl.textContent = "Welcome, User";
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-          greetingEl.textContent = "Welcome, User";
+    <script>
+        function goToProfilePage() {
+            window.location.href = "pro.html";
         }
-      } else {
-        greetingEl.textContent = "Welcome, Guest";
-      }
-    });
-  </script>
 
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const hamburger = document.querySelector(".hamburger-menu");
-      hamburger.addEventListener("click", () => {
-        window.location.href = "pro.html";
-      });
-    });
-  </script>
-  <script type="module" src="index.js"></script>
-
+        
+        document.getElementById("darkModeToggle").addEventListener("click", function () {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
 
 </body>
 </html>
