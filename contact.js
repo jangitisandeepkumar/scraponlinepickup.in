@@ -3,10 +3,16 @@ import {
   getFirestore,
   collection,
   addDoc,
+  getDoc,
+  doc,
   Timestamp
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
 import { firebaseConfig } from "./firebaseConfig.js";
 
 // Initialize Firebase
@@ -17,14 +23,50 @@ const auth = getAuth(app);
 const form = document.getElementById("pickupForm");
 const successMessage = document.getElementById("successMessage");
 
+// 🚫 Hide the form until we verify the user
+form.style.display = "none";
+
 const allowedLocations = [
   "HITEC City", "Gachibowli", "Madhapur", "Jubilee Hills", "Banjara Hills",
   "Kukatpally", "Miyapur", "Serilingampally", "Manikonda", "Nanakramguda",
   "Tolichowki", "Kompally"
 ];
 
+// ✅ Check if user is logged in and fetch Firestore user info
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    // Not logged in → redirect to login page
+    window.location.href = `login.html?redirect=contact.html`;
+  } else {
+    // Show form
+    form.style.display = "block";
+
+    // Pre-fill email field
+    document.getElementById("email").value = user.email || "";
+
+    // Optional: Fetch name & phone from Firestore (if stored)
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        document.getElementById("name").value = data.name || "";
+        document.getElementById("phone").value = data.phone || "";
+      }
+    } catch (error) {
+      console.warn("Could not fetch user data from Firestore:", error);
+    }
+  }
+});
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  const user = auth.currentUser;
+  if (!user) {
+    alert("Please log in to submit a request.");
+    return;
+  }
 
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -38,19 +80,17 @@ form.addEventListener("submit", async (e) => {
     document.querySelectorAll('input[name="material"]:checked')
   ).map((checkbox) => checkbox.value);
 
-  // Validate location
   if (!allowedLocations.includes(location)) {
     alert("Pickup is not available in your area. Please choose a nearby location.");
     return;
   }
 
-  // Validate time
   if (!time) {
-    alert("Please select a valid time.");
+    alert("Please select a valid pickup time.");
     return;
   }
 
-  const [hour, minute] = time.split(":").map(Number);
+  const [hour] = time.split(":").map(Number);
   if (isNaN(hour) || hour < 8 || hour >= 20) {
     alert("Pickup time must be between 8:00 AM and 8:00 PM.");
     return;
@@ -73,6 +113,7 @@ form.addEventListener("submit", async (e) => {
       preferredDate: date,
       preferredTime: formattedTime,
       timestamp: Timestamp.now(),
+      uid: user.uid
     });
 
     successMessage.textContent = "Pickup request submitted successfully!";
@@ -83,3 +124,4 @@ form.addEventListener("submit", async (e) => {
     alert("An error occurred while submitting your request. Please try again.");
   }
 });
+
