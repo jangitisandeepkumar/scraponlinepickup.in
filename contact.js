@@ -1,3 +1,4 @@
+// Import Firebase modules (version 11.5.0)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
 import {
   getFirestore,
@@ -10,7 +11,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 
-
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
   authDomain: "login-51a65.firebaseapp.com",
@@ -20,10 +21,12 @@ const firebaseConfig = {
   appId: "1:1051725155986:web:31ab5d15f993e9eee0e04b"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+// DOM elements
 const form = document.getElementById("pickupForm");
 const errorMessage = document.getElementById("errorMessage");
 const loginReminderBox = document.getElementById("loginReminderBox");
@@ -44,6 +47,7 @@ const dateInput = document.getElementById("date");
 
 let currentUser = null;
 
+// Date limits
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 const maxDate = new Date(today);
@@ -51,6 +55,7 @@ maxDate.setDate(today.getDate() + 30);
 dateInput.min = today.toISOString().split("T")[0];
 dateInput.max = maxDate.toISOString().split("T")[0];
 
+// Dark mode toggle
 const isDarkMode = localStorage.getItem("darkMode") === "enabled";
 if (isDarkMode) {
   document.body.classList.add("dark-mode");
@@ -58,33 +63,20 @@ if (isDarkMode) {
   darkModeToggle.textContent = "☀️";
 }
 darkModeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-  const isDark = document.body.classList.contains("dark-mode");
-  localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
-  darkModeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-  darkModeToggle.textContent = isDark ? "☀️" : "🌙";
+  const dark = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("darkMode", dark ? "enabled" : "disabled");
+  darkModeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+  darkModeToggle.textContent = dark ? "☀️" : "🌙";
 });
 
-
+// Auth state listener
 onAuthStateChanged(auth, (user) => {
+  currentUser = user || null;
   if (user) {
-    currentUser = user;
     loginReminderBox.style.display = "none";
     form.style.display = "block";
     submitBtn.disabled = false;
-    if (new URLSearchParams(window.location.search).get("login") === "success") {
-      pickupCard.style.display = "block";
-      form.style.display = "none";
-      statusText.textContent = "Login successful! Schedule your pickup.";
-      liveRegion.textContent = "Login successful. You can now schedule a pickup.";
-      setTimeout(() => {
-        pickupCard.style.display = "none";
-        form.style.display = "block";
-        resetScene();
-      }, 3000);
-    }
   } else {
-    currentUser = null;
     loginReminderBox.style.display = "block";
     form.style.display = "none";
     pickupCard.style.display = "none";
@@ -92,32 +84,31 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Login button action
+// Go to login
 goToLoginBtn.addEventListener("click", () => {
-  const redirectUrl = window.location.href;
-  window.location.href = `login.html?redirect=${encodeURIComponent(redirectUrl)}`;
+  window.location.href = `login.html?redirect=${encodeURIComponent(window.location.href)}`;
 });
 
-
+// Close pickup
 closePickup.addEventListener("click", () => {
   pickupCard.style.display = "none";
   form.style.display = "block";
   resetScene();
 });
 
-
+// Allowed locations
 const allowedLocations = [
   "HITEC City", "Gachibowli", "Madhapur", "Jubilee Hills", "Banjara Hills",
   "Kukatpally", "Miyapur", "Serilingampally", "Manikonda", "Nanakramguda",
   "Tolichowki", "Kompally", "LB Nagar", "Suryapet", "Medchal"
 ];
 
-
+// Animations
 function launchConfetti() {
   for (let i = 0; i < 30; i++) {
     const conf = document.createElement('div');
     conf.style.position = 'fixed';
-    conf.style.left = (Math.random() * 100) + 'vw';
+    conf.style.left = `${Math.random() * 100}vw`;
     conf.style.top = '-10px';
     conf.style.width = '8px';
     conf.style.height = '8px';
@@ -129,7 +120,7 @@ function launchConfetti() {
     document.body.appendChild(conf);
 
     const fall = conf.animate([
-      { transform: `translateY(0px) rotate(0deg)`, opacity: 1 },
+      { transform: 'translateY(0px) rotate(0deg)', opacity: 1 },
       { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)`, opacity: 0.8 }
     ], { duration: 2000 + Math.random() * 1000, easing: 'ease-out' });
 
@@ -151,32 +142,25 @@ function resetScene() {
 function showPickup() {
   resetScene();
   statusText.textContent = 'Truck is on the way…';
-  liveRegion.textContent = 'Pickup truck is en route';
-
   wheelL.classList.add('spin');
   wheelR.classList.add('spin');
 
-  setTimeout(() => {
-    truckWrap.classList.add('arrived');
-  }, 120);
-
+  setTimeout(() => truckWrap.classList.add('arrived'), 120);
   setTimeout(() => {
     wheelL.classList.remove('spin');
     wheelR.classList.remove('spin');
     boxEl.classList.add('show');
     statusText.textContent = 'Items collected';
-    liveRegion.textContent = 'Items collected by pickup truck';
   }, 1200);
-
   setTimeout(() => {
     badgeEl.classList.add('show');
     scrapPath.classList.add('draw');
     statusText.textContent = 'Recycle pickup complete';
-    liveRegion.textContent = 'Recycle pickup complete';
     launchConfetti();
   }, 1600);
 }
 
+// Form submit
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   submitBtn.disabled = true;
@@ -187,115 +171,52 @@ form.addEventListener("submit", async (e) => {
   const phone = document.getElementById("phone").value.trim();
   const location = document.getElementById("location").value;
   const scrapSource = document.getElementById("scrapSource").value;
-  const weight = document.getElementById("weight").value.trim();
+  const weight = parseFloat(document.getElementById("weight").value.trim());
   const date = document.getElementById("date").value;
   const time = document.getElementById("time").value;
 
   const selectedMaterials = Array.from(
     document.querySelectorAll('input[name="material"]:checked')
-  ).map((checkbox) => checkbox.value);
+  ).map(cb => cb.value);
 
-  if (selectedMaterials.length === 0) {
-    errorMessage.textContent = "Please select at least one scrap material.";
-    errorMessage.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Request";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
-    return;
-  }
-
-  if (!allowedLocations.includes(location)) {
-    errorMessage.textContent = "Pickup is not available in your area.";
-    errorMessage.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Request";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
-    return;
-  }
-
-  if (!scrapSource) {
-    errorMessage.textContent = "Please select the source of your scrap material.";
-    errorMessage.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Request";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
-    return;
-  }
-
-  if (!/^\d{10}$/.test(phone)) {
-    errorMessage.textContent = "Please enter a valid 10-digit phone number.";
-    errorMessage.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Request";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
-    return;
-  }
-
-  const weightNum = parseFloat(weight);
-  if (weightNum < 55 || weightNum > 1000) {
-    errorMessage.textContent = "Please enter a valid weight between 55 and 1000 kg.";
-    errorMessage.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Request";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
-    return;
-  }
-
-  const selectedDate = new Date(date);
-  if (selectedDate < today || selectedDate > maxDate) {
-    errorMessage.textContent = "Please select a date within the next 30 days.";
-    errorMessage.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Request";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
-    return;
-  }
-
+  // Validation
+  if (!selectedMaterials.length) return showError("Please select at least one scrap material.");
+  if (!allowedLocations.includes(location)) return showError("Pickup is not available in your area.");
+  if (!scrapSource) return showError("Please select the source of your scrap material.");
+  if (!/^\d{10}$/.test(phone)) return showError("Please enter a valid 10-digit phone number.");
+  if (weight < 55 || weight > 1000) return showError("Weight must be between 55 and 1000 kg.");
+  if (new Date(date) < today || new Date(date) > maxDate) return showError("Date must be within the next 30 days.");
   const [hour] = time.split(":").map(Number);
-  if (hour < 8 || hour >= 20) {
-    errorMessage.textContent = "Pickup time must be between 8:00 AM and 8:00 PM.";
-    errorMessage.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Request";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
-    return;
-  }
-
-  const formattedTime = new Date(`1970-01-01T${time}:00`).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+  if (hour < 8 || hour >= 20) return showError("Pickup time must be between 8 AM and 8 PM.");
 
   try {
     await addDoc(collection(db, "pickupRequests"), {
       uid: currentUser.uid,
-      name,
-      email,
-      phone,
-      location,
-      scrapSource,
-      selectedMaterials,
-      weight: weightNum,
+      name, email, phone, location, scrapSource,
+      selectedMaterials, weight,
       preferredDate: date,
-      preferredTime: formattedTime,
-      timestamp: Timestamp.now(),
+      preferredTime: new Date(`1970-01-01T${time}:00`).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true }),
+      timestamp: Timestamp.now()
     });
-
     form.style.display = "none";
     pickupCard.style.display = "block";
     showPickup();
-  } catch (error) {
-    console.error("Error submitting request:", error);
-    errorMessage.textContent = "Something went wrong. Please try again.";
-    errorMessage.style.display = "block";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 5000);
+  } catch (err) {
+    console.error(err);
+    showError("Something went wrong. Please try again.");
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = "Submit Request";
   }
 });
 
+function showError(msg) {
+  errorMessage.textContent = msg;
+  errorMessage.style.display = "block";
+  setTimeout(() => errorMessage.style.display = "none", 5000);
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Submit Request";
+}
 
+// Init
 resetScene();
-
