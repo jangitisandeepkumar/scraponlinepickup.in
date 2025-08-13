@@ -10,7 +10,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 
-// Firebase config
+
 const firebaseConfig = {
   apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
   authDomain: "login-51a65.firebaseapp.com",
@@ -44,7 +44,6 @@ const dateInput = document.getElementById("date");
 
 let currentUser = null;
 
-// Set min and max dates for the date input
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 const maxDate = new Date(today);
@@ -52,7 +51,6 @@ maxDate.setDate(today.getDate() + 30);
 dateInput.min = today.toISOString().split("T")[0];
 dateInput.max = maxDate.toISOString().split("T")[0];
 
-// Dark Mode Toggle
 const isDarkMode = localStorage.getItem("darkMode") === "enabled";
 if (isDarkMode) {
   document.body.classList.add("dark-mode");
@@ -67,7 +65,7 @@ darkModeToggle.addEventListener("click", () => {
   darkModeToggle.textContent = isDark ? "☀️" : "🌙";
 });
 
-// Check login status
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
@@ -100,21 +98,21 @@ goToLoginBtn.addEventListener("click", () => {
   window.location.href = `login.html?redirect=${encodeURIComponent(redirectUrl)}`;
 });
 
-// Close pickup animation
+
 closePickup.addEventListener("click", () => {
   pickupCard.style.display = "none";
   form.style.display = "block";
   resetScene();
 });
 
-// Locations allowed
+
 const allowedLocations = [
   "HITEC City", "Gachibowli", "Madhapur", "Jubilee Hills", "Banjara Hills",
   "Kukatpally", "Miyapur", "Serilingampally", "Manikonda", "Nanakramguda",
   "Tolichowki", "Kompally", "LB Nagar", "Suryapet", "Medchal"
 ];
 
-// Animation Functions
+
 function launchConfetti() {
   for (let i = 0; i < 30; i++) {
     const conf = document.createElement('div');
@@ -179,7 +177,6 @@ function showPickup() {
   }, 1600);
 }
 
-// Form submission
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   submitBtn.disabled = true;
@@ -198,7 +195,6 @@ form.addEventListener("submit", async (e) => {
     document.querySelectorAll('input[name="material"]:checked')
   ).map((checkbox) => checkbox.value);
 
-  // Validation
   if (selectedMaterials.length === 0) {
     errorMessage.textContent = "Please select at least one scrap material.";
     errorMessage.style.display = "block";
@@ -300,5 +296,6 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-// Initialize scene
+
 resetScene();
+
