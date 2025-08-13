@@ -1,4 +1,4 @@
-/* Reset and Base Styles */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -6,10 +6,42 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Body */
 body {
   background-color: #f9f9f9;
   color: #333;
   line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-mode .features-section {
+  background-color: #1e1e1e;
+  box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .feature-box {
+  background: #2c2c2c;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .feature-box p {
+  color: #a0a0a0;
+}
+
+body.dark-mode .footer {
+  background-color: #111;
+  color: #a0a0a0;
+}
+
+body.dark-mode #darkModeToggle {
+  background-color: #333;
+  color: #fff;
 }
 
 /* Header */
@@ -32,32 +64,37 @@ body {
   flex-wrap: wrap;
 }
 
-.logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #00c853;
-  text-decoration: none;
-}
-
-#userGreeting {
-  font-size: 1rem;
-  color: #eee;
-  margin-bottom: 0.5rem;
-}
-
 /* Hamburger */
 .hamburger-menu {
   font-size: 1.5rem;
   cursor: pointer;
   color: #fff;
-  display: none;
+  order: -1;
+  margin-left: -0.5rem; /* Moves the hamburger menu to the left */
 }
 
+/* Logo */
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #00c853;
+  text-decoration: none;
+  margin: 0 1.5rem; /* Increased margin-left to move logo slightly to the right */
+  order: 0;
+}
 /* Navigation */
+.navigation {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
 .navigation ul {
   display: flex;
   list-style: none;
   gap: 1.5rem;
+  justify-content: center;
+  margin: 0;
 }
 
 .navigation a {
@@ -67,8 +104,25 @@ body {
   transition: color 0.3s;
 }
 
-.navigation a:hover {
+.navigation a:hover,
+.navigation a.active {
   color: #00e676;
+  border-bottom: 2px solid #00c853;
+}
+
+/* Dark Mode Button */
+#darkModeToggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: #f0f0f0;
+  color: #222;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 999;
 }
 
 /* Features Section */
@@ -76,6 +130,11 @@ body {
   padding: 4rem 1rem;
   background: #fff;
   text-align: center;
+}
+
+.features-container {
+  max-width: 1100px;
+  margin: auto;
 }
 
 .features-title {
@@ -132,19 +191,18 @@ body {
 @media (max-width: 768px) {
   .navigation ul {
     flex-direction: column;
-    gap: 1rem;
+    background-color: #222;
+    padding: 1rem;
+    display: none;
+    width: 100%;
     margin-top: 1rem;
   }
 
-  .hamburger-menu {
-    display: block;
+  .navigation.active ul {
+    display: flex;
   }
 
-  .navigation {
-    display: none;
-  }
-
-  .navigation.active {
-    display: block;
+  .logo {
+    margin-right: auto;
   }
 }
