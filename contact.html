@@ -26,15 +26,13 @@
   <section class="contact-section">
     <div class="container">
       <h1>Schedule Your Pickup</h1>
-
-      <!-- Login Required Box -->
+>
       <div id="loginReminderBox" role="alert" aria-live="polite">
         <h3>⚠️ You are not logged in</h3>
         <p>Please log in to schedule a pickup.</p>
         <button id="goToLoginBtn">Login</button>
       </div>
 
-      <!-- Pickup Animation -->
       <div class="card pickup-card" id="pickupCard" role="region" aria-labelledby="pickupTitle" style="display:none;">
         <button id="closePickup" class="close-btn" aria-label="Close pickup animation">✖</button>
         <h2 id="pickupTitle">Pickup Scheduled</h2>
@@ -71,7 +69,7 @@
         <div class="sr-only" aria-live="polite" id="liveRegion"></div>
       </div>
 
-      <!-- Pickup Form -->
+      
       <form id="pickupForm" class="contact-form" style="display:none;">
         <div class="form-group">
           <label for="name">Full Name</label>
@@ -166,3 +164,4 @@
   <script type="module" src="contact.js"></script>
 </body>
 </html>
+
