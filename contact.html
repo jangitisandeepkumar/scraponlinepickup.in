@@ -4,14 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Schedule Pickup | Online Scrap</title>
-  <link rel="icon" type="image/png" href="android-chrome-512x512.png">
-
   <link rel="stylesheet" href="contact.css" />
 </head>
 <body>
   <header class="header">
     <div class="container">
-      <a href="iron.html" class="logo">Online Scrap</a>
+      <a href="index.html" class="logo">Online Scrap</a>
       <nav class="navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
@@ -23,10 +21,58 @@
     </div>
   </header>
 
+  <button id="darkModeToggle" aria-label="Switch to dark mode">🌙</button>
+
   <section class="contact-section">
     <div class="container">
       <h1>Schedule Your Pickup</h1>
-      <form id="pickupForm" class="contact-form">
+
+      <!-- Login Required Box -->
+      <div id="loginReminderBox" role="alert" aria-live="polite">
+        <h3>⚠️ You are not logged in</h3>
+        <p>Please log in to schedule a pickup.</p>
+        <button id="goToLoginBtn">Login</button>
+      </div>
+
+      <!-- Pickup Animation -->
+      <div class="card pickup-card" id="pickupCard" role="region" aria-labelledby="pickupTitle" style="display:none;">
+        <button id="closePickup" class="close-btn" aria-label="Close pickup animation">✖</button>
+        <h2 id="pickupTitle">Pickup Scheduled</h2>
+        <p>We'll pick up your scrap soon.</p>
+        <div class="scene" aria-hidden="true">
+          <div class="truck-wrap" id="truckWrap">
+            <svg class="truck" viewBox="0 0 120 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="6" y="18" width="64" height="28" rx="4" fill="#eaf4ff" stroke="#cfe7ff" stroke-width="1.5"/>
+              <rect x="64" y="8" width="36" height="24" rx="3" fill="#1a73e8"/>
+              <rect x="68" y="10" width="18" height="10" rx="1" fill="#dbefff"/>
+              <circle cx="26" cy="54" r="9" class="wheel" id="wheelL"/>
+              <circle cx="88" cy="54" r="9" class="wheel" id="wheelR"/>
+              <rect x="10" y="20" width="56" height="24" rx="3" fill="none" stroke="#93c5fd" stroke-width="1.2"/>
+              <line x1="20" y1="28" x2="46" y2="28" stroke="#cbe8ff" stroke-width="1.2"/>
+              <line x1="20" y1="34" x2="46" y2="34" stroke="#cbe8ff" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="box crate" id="boxEl" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6h16v12H4z" fill="#fff" stroke="#1a73e8" stroke-width="1.5"/>
+              <path d="M4 6l8 6 8-6" fill="#dbeafe"/>
+              <path d="M6 8v8m12-8v8" stroke="#1a73e8" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="badge" id="badgeEl" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path class="scrap-path" id="scrapPath" d="M12 6a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V9a3 3 0 0 0-3-3zm-1.5 9h3" fill="none" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="scrap-path" id="scrapPath" d="M6 12a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3" fill="none" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ground"></div>
+        </div>
+        <div class="muted">Status: <span id="statusText">Waiting for pickup</span></div>
+        <div class="sr-only" aria-live="polite" id="liveRegion"></div>
+      </div>
+
+      <!-- Pickup Form -->
+      <form id="pickupForm" class="contact-form" style="display:none;">
         <div class="form-group">
           <label for="name">Full Name</label>
           <input type="text" id="name" required placeholder="Enter your full name" />
@@ -37,7 +83,7 @@
         </div>
         <div class="form-group">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" required placeholder="Enter your phone number" />
+          <input type="tel" id="phone" required pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" />
         </div>
         <div class="form-group">
           <label for="location">Select Your Location</label>
@@ -61,26 +107,41 @@
           </select>
         </div>
         <div class="form-group">
-          <label>Select Scrap Material Types (Choose one or more):</label>
-          <div class="checkbox-group">
-            <label><input type="checkbox" name="material" value="copper"> Copper</label>
-            <label><input type="checkbox" name="material" value="aluminum"> Aluminum</label>
-            <label><input type="checkbox" name="material" value="steel"> Steel</label>
-            <label><input type="checkbox" name="material" value="iron"> Iron</label>
-            <label><input type="checkbox" name="material" value="brass"> Brass</label>
-            <label><input type="checkbox" name="material" value="lead"> Lead</label>
-            <label><input type="checkbox" name="material" value="computer"> Computer</label>
-            <label><input type="checkbox" name="material" value="cardboard"> Cardboard</label>
-            <label><input type="checkbox" name="material" value="paper"> Paper</label>
-            <label><input type="checkbox" name="material" value="plastic"> Plastic</label>
-            <label><input type="checkbox" name="material" value="glass"> Glass</label>
-            <label><input type="checkbox" name="material" value="computer_wire"> Computer Wire</label>
-            <label><input type="checkbox" name="material" value="normal_wire"> Normal Wire</label>
-          </div>
+          <fieldset>
+            <legend>Select Scrap Material Types (Choose one or more):</legend>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="material" value="copper"> Copper</label>
+              <label><input type="checkbox" name="material" value="aluminum"> Aluminum</label>
+              <label><input type="checkbox" name="material" value="steel"> Steel</label>
+              <label><input type="checkbox" name="material" value="iron"> Iron</label>
+              <label><input type="checkbox" name="material" value="brass"> Brass</label>
+              <label><input type="checkbox" name="material" value="lead"> Lead</label>
+              <label><input type="checkbox" name="material" value="computer"> Computer</label>
+              <label><input type="checkbox" name="material" value="cardboard"> Cardboard</label>
+              <label><input type="checkbox" name="material" value="paper"> Paper</label>
+              <label><input type="checkbox" name="material" value="plastic"> Plastic</label>
+              <label><input type="checkbox" name="material" value="glass"> Glass</label>
+              <label><input type="checkbox" name="material" value="computer_wire"> Computer Wire</label>
+              <label><input type="checkbox" name="material" value="normal_wire"> Normal Wire</label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="form-group">
+          <label for="scrapSource">Source of Scrap Material</label>
+          <select id="scrapSource" required>
+            <option value="">-- Select Scrap Source --</option>
+            <option value="Supermarket">Supermarket</option>
+            <option value="Department Store">Department Store</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Residential">Residential</option>
+            <option value="Office">Office</option>
+            <option value="Other">Other</option>
+          </select>
+          <input type="text" id="scrapSourceOther" placeholder="Specify other source" style="display:none; margin-top:10px;" />
         </div>
         <div class="form-group">
           <label for="weight">Estimated Total Scrap Weight (kg)</label>
-          <input type="number" id="weight" required placeholder="Enter total weight in kg" />
+          <input type="number" id="weight" required placeholder="Enter total weight in kg" min="55" max="1000" step="0.1" />
         </div>
         <div class="form-group">
           <label for="date">Preferred Pickup Date</label>
@@ -91,100 +152,17 @@
           <input type="time" id="time" required />
         </div>
         <button type="submit">Submit Request</button>
-        <p id="successMessage" style="color:green; display:none; text-align:center; margin-top:20px;"></p>
+        <p id="errorMessage" style="color:red; display:none; text-align:center;" aria-live="assertive"></p>
       </form>
     </div>
   </section>
 
   <footer class="footer">
     <div class="container">
-      <p>© 2024 Online Scrap. All Rights Reserved.</p>
+      <p>© 2025 Online Scrap. All Rights Reserved.</p>
     </div>
   </footer>
 
-  <!-- Firebase Configuration -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      Timestamp
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
-authDomain: "login-51a65.firebaseapp.com",
-projectId: "login-51a65",
-storageBucket: "login-51a65.appspot.com",
-messagingSenderId: "1051725155986",
-appId: "1:1051725155986:web:31ab5d15f993e9eee0e04b"
-};
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const form = document.getElementById("pickupForm");
-    const successMessage = document.getElementById("successMessage");
-
-    const allowedLocations = [
-      "HITEC City", "Gachibowli", "Madhapur", "Jubilee Hills", "Banjara Hills",
-      "Kukatpally", "Miyapur", "Serilingampally", "Manikonda", "Nanakramguda",
-      "Tolichowki", "Kompally"
-    ];
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const location = document.getElementById("location").value;
-      const weight = document.getElementById("weight").value;
-      const date = document.getElementById("date").value;
-      const time = document.getElementById("time").value;
-
-      const selectedMaterials = Array.from(document.querySelectorAll('input[name="material"]:checked'))
-        .map(cb => cb.value);
-
-      if (!allowedLocations.includes(location)) {
-        alert("Pickup slots are not available in your area due to distance. Please choose a nearby location.");
-        return;
-      }
-
-      const [hour] = time.split(":").map(Number);
-      if (hour < 8 || hour >= 20) {
-        alert("Pickup time must be between 8:00 AM and 8:00 PM.");
-        return;
-      }
-
-      const formattedTime = new Date(`1970-01-01T${time}:00`).toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      });
-
-      try {
-        await addDoc(collection(db, "pickupRequests"), {
-          name,
-          email,
-          phone,
-          location,
-          selectedMaterials,
-          weight: parseFloat(weight),
-          preferredDate: date,
-          preferredTime: formattedTime,
-          timestamp: Timestamp.now()
-        });
-
-        successMessage.textContent = "Pickup request submitted successfully!";
-        successMessage.style.display = "block";
-        form.reset();
-      } catch (error) {
-        console.error("Error submitting request:", error);
-        alert("Something went wrong. Please try again.");
-      }
-    });
-  </script>
+  <script type="module" src="contact.js"></script>
 </body>
 </html>
-
