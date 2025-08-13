@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Online Scrap</title>
-    <link rel="icon" type="image/png" href="android-chrome-512x512.png">
-
     <link rel="stylesheet" href="aboutus.css">
 </head>
 <body>
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle" aria-label="Switch to dark mode">🌙</button>
 
     <!-- Header Section -->
     <header class="header">
@@ -19,8 +19,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="prices.html">Prices</a></li>
                     <li><a href="contact.html">Schedule a Pickup</a></li>
-                    <li><a href="aboutus.html">About Us</a></li>
-                    
+                    <li><a href="aboutus.html" class="active">About Us</a></li>
                 </ul>
             </nav>
         </div>
@@ -30,14 +29,14 @@
     <main class="about-section">
         <div class="container">
             <h1>About Online Scrap</h1>
-            <p>Welcome to **Online Scrap**, your trusted partner in efficient and transparent scrap recycling. We make it easy for individuals and businesses to dispose of scrap responsibly while earning money.</p>
+            <p>Welcome to <strong>Online Scrap</strong>, your trusted partner in efficient and transparent scrap recycling. We make it easy for individuals and businesses to dispose of scrap responsibly while earning money.</p>
 
             <h2>Why Choose Us?</h2>
 
             <div class="about-features">
                 <div class="feature">
                     <h3>✔ Precise Weight Measurement</h3>
-                    <p>We use **state-of-the-art digital weighing machines** that ensure accurate measurements, verified through regular calibration.</p>
+                    <p>We use <strong>state-of-the-art digital weighing machines</strong> that ensure accurate measurements, verified through regular calibration.</p>
                 </div>
                 <div class="feature">
                     <h3>✔ 100% Transparency</h3>
@@ -45,27 +44,27 @@
                 </div>
                 <div class="feature">
                     <h3>✔ Competitive Pricing</h3>
-                    <p>We offer **top market rates** based on real-time values, ensuring you receive **fair compensation** for your scrap.</p>
+                    <p>We offer <strong>top market rates</strong> based on real-time values, ensuring you receive <strong>fair compensation</strong> for your scrap.</p>
                 </div>
                 <div class="feature">
                     <h3>✔ Instant Payments</h3>
-                    <p>Receive **immediate payment** via bank transfer, digital wallet, or cash after your scrap is weighed and evaluated.</p>
+                    <p>Receive <strong>immediate payment</strong> via bank transfer, digital wallet, or cash after your scrap is weighed and evaluated.</p>
                 </div>
                 <div class="feature">
                     <h3>✔ No Hidden Fees</h3>
-                    <p>The weight you see is what you get paid for—**no surprises, no deductions**.</p>
+                    <p>The weight you see is what you get paid for—<strong>no surprises, no deductions</strong>.</p>
                 </div>
                 <div class="feature">
                     <h3>✔ Environmentally Responsible</h3>
-                    <p>We follow **sustainable recycling practices** to help reduce landfill waste and promote a greener future.</p>
+                    <p>We follow <strong>sustainable recycling practices</strong> to help reduce landfill waste and promote a greener future.</p>
                 </div>
                 <div class="feature">
                     <h3>✔ Easy Pickup Scheduling</h3>
-                    <p>Our **online booking system** allows you to schedule a scrap pickup at your convenience.</p>
+                    <p>Our <strong>online booking system</strong> allows you to schedule a scrap pickup at your convenience.</p>
                 </div>
                 <div class="feature">
                     <h3>✔ Trusted by Thousands</h3>
-                    <p>Our **customers trust us** for honest dealings and commitment to fair pricing.</p>
+                    <p>Our <strong>customers trust us</strong> for honest dealings and commitment to fair pricing.</p>
                 </div>
             </div>
 
@@ -78,17 +77,40 @@
             </ul>
 
             <h2>Join Us Today!</h2>
-            <p>By choosing **Online Scrap**, you're opting for a service that values fairness, accuracy, and customer satisfaction. Start recycling today and be part of a sustainable future.</p>
+            <p>By choosing <strong>Online Scrap</strong>, you're opting for a service that values fairness, accuracy, and customer satisfaction. Start recycling today and be part of a sustainable future.</p>
         </div>
     </main>
 
     <!-- Footer Section -->
     <footer class="footer">
         <div class="container">
-            <p>© 2024 Online Scrap. All Rights Reserved.</p>
+            <p>© 2025 Online Scrap. All Rights Reserved.</p>
         </div>
     </footer>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Hamburger menu redirect
+            document.querySelector(".hamburger-menu")?.addEventListener("click", () => {
+                window.location.href = "pro.html";
+            });
+
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            const isDarkMode = localStorage.getItem("darkMode") === "enabled";
+            if (isDarkMode) {
+                document.body.classList.add("dark-mode");
+                darkModeToggle.setAttribute("aria-label", "Switch to light mode");
+                darkModeToggle.textContent = "☀️";
+            }
+            darkModeToggle.addEventListener("click", () => {
+                document.body.classList.toggle("dark-mode");
+                const isDark = document.body.classList.contains("dark-mode");
+                localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
+                darkModeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+                darkModeToggle.textContent = isDark ? "☀️" : "🌙";
+            });
+        });
+    </script>
 </body>
 </html>
-
