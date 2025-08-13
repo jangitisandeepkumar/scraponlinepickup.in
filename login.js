@@ -2,13 +2,19 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebas
 import {
   getAuth,
   signInWithEmailAndPassword,
-  sendEmailVerification,
   sendPasswordResetEmail,
   signOut,
   fetchSignInMethodsForEmail
 } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
-// Firebase configuration
+// 🔧 Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
   authDomain: "login-51a65.firebaseapp.com",
@@ -18,13 +24,15 @@ const firebaseConfig = {
   appId: "1:1051725155986:web:31ab5d15f993e9eee0e04b"
 };
 
+// 🔧 Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Login
+// 🔐 Login
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const email = document.getElementById("email").value.trim();
+  const email = document.getElementById("email").value.trim().toLowerCase();
   const password = document.getElementById("password").value;
 
   try {
@@ -32,52 +40,21 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     const user = userCredential.user;
 
     if (!user.emailVerified) {
-      alert("Please verify your email before logging in.");
+      alert("⚠️ Please verify your email before logging in.");
       await signOut(auth);
       return;
     }
 
-    alert("Login successful!");
-
+    alert("✅ Login successful!");
     const params = new URLSearchParams(window.location.search);
     const redirect = params.get("redirect");
     window.location.href = redirect ? redirect : "iron.html";
-
   } catch (error) {
-    alert("Login failed: " + error.message);
+    alert("❌ Login failed: " + error.message.replace("Firebase:", ""));
   }
 });
 
-// Resend verification
-const resendBtn = document.getElementById("resend-verification");
-if (resendBtn) {
-  resendBtn.addEventListener("click", async () => {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      if (user.emailVerified) {
-        alert("Email already verified.");
-        await signOut(auth);
-        return;
-      }
-
-      await sendEmailVerification(user, {
-        url: window.location.origin + "/login.html"
-      });
-
-      alert("Verification email resent.");
-      await signOut(auth);
-    } catch (error) {
-      alert("Error: " + error.message);
-    }
-  });
-}
-
-// Forgot Password
+// 🔁 Forgot Password (with email & phone check)
 const forgotLink = document.getElementById("forgotPasswordLink");
 const modal = document.getElementById("resetModal");
 const closeModal = document.getElementById("closeModal");
@@ -92,25 +69,43 @@ if (forgotLink && modal && closeModal && resetBtn) {
     modal.style.display = "none";
   });
 
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
   resetBtn.addEventListener("click", async () => {
-    const resetEmail = document.getElementById("resetEmail").value.trim();
-    if (!resetEmail) {
-      alert("Please enter your email.");
+    const email = document.getElementById("resetEmail").value.trim().toLowerCase();
+    const phone = document.getElementById("resetPhone").value.trim();
+
+    if (!email || !phone) {
+      alert("❗ Please enter both email and phone number.");
       return;
     }
 
     try {
-      const methods = await fetchSignInMethodsForEmail(auth, resetEmail);
+      const methods = await fetchSignInMethodsForEmail(auth, email);
       if (methods.length === 0) {
-        alert("No account found with this email.");
+        alert("❌ No account found with this email.");
         return;
       }
 
-      await sendPasswordResetEmail(auth, resetEmail);
-      alert("Password reset link sent! Check your email.");
+      // 🔍 Search Firestore for matching email + phone
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("email", "==", email), where("phone", "==", phone));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        alert("❌ Email and phone do not match.");
+        return;
+      }
+
+      await sendPasswordResetEmail(auth, email);
+      alert("✅ Password reset link sent! Check your inbox.");
       modal.style.display = "none";
     } catch (error) {
-      alert("Error sending reset email: " + error.message);
+      alert("❌ Error: " + error.message.replace("Firebase:", ""));
     }
   });
 }
