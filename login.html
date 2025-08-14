@@ -1,3 +1,5 @@
+<link rel="icon" type="image/png" href="android-chrome-512x512.png">
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,73 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login | Online Scrap</title>
   <link rel="stylesheet" href="login.css" />
-  <style>
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-    }
-
-    .modal-content {
-      background-color: #fff;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-
-    .modal-content button {
-      width: 100%;
-      padding: 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .modal-content button:hover {
-      background-color: #0056b3;
-    }
-
-    .close {
-      float: right;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .close:hover {
-      color: red;
-    }
-  </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="container">
       <a href="iron.html" class="logo">Online Scrap</a>
     </div>
   </header>
 
+  <!-- Main Form -->
   <main class="form-container">
     <div class="form-card">
       <h2>Login</h2>
@@ -85,19 +30,18 @@
     </div>
   </main>
 
- <!-- Password Reset Modal -->
-<!-- Password Reset Modal -->
-<div id="resetModal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeModal">&times;</span>
-    <h3>Reset Password</h3>
-    <input type="email" id="resetEmail" placeholder="Enter your registered email" required>
-    <input type="tel" id="resetPhone" placeholder="Enter your registered phone number" required>
-    <button id="resetBtn">Send Reset Link</button>
+  <!-- Password Reset Modal -->
+  <div id="resetModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h3>Reset Password</h3>
+      <input type="email" id="resetEmail" placeholder="Enter your registered email" required>
+      <input type="tel" id="resetPhone" placeholder="Enter your registered phone number" required>
+      <button id="resetBtn">Send Reset Link</button>
+    </div>
   </div>
-</div>
 
-
+  <!-- Footer -->
   <footer class="footer">
     <p>© 2024 Online Scrap. All Rights Reserved.</p>
   </footer>
@@ -106,8 +50,3 @@
   <script type="module" src="login.js"></script>
 </body>
 </html>
-
-
-
-
-
