@@ -61,20 +61,24 @@ const closeModal = document.getElementById("closeModal");
 const resetBtn = document.getElementById("resetBtn");
 
 if (forgotLink && modal && closeModal && resetBtn) {
+  // Open modal
   forgotLink.addEventListener("click", () => {
     modal.style.display = "block";
   });
 
+  // Close modal via "X"
   closeModal.addEventListener("click", () => {
     modal.style.display = "none";
   });
 
+  // Close modal by clicking outside
   window.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.style.display = "none";
     }
   });
 
+  // Reset password button
   resetBtn.addEventListener("click", async () => {
     const email = document.getElementById("resetEmail").value.trim().toLowerCase();
     const phone = document.getElementById("resetPhone").value.trim();
@@ -84,10 +88,15 @@ if (forgotLink && modal && closeModal && resetBtn) {
       return;
     }
 
+    resetBtn.disabled = true;
+    resetBtn.textContent = "Sending...";
+
     try {
       const methods = await fetchSignInMethodsForEmail(auth, email);
       if (methods.length === 0) {
         alert("❌ No account found with this email.");
+        resetBtn.disabled = false;
+        resetBtn.textContent = "Send Reset Link";
         return;
       }
 
@@ -98,6 +107,8 @@ if (forgotLink && modal && closeModal && resetBtn) {
 
       if (querySnapshot.empty) {
         alert("❌ Email and phone do not match.");
+        resetBtn.disabled = false;
+        resetBtn.textContent = "Send Reset Link";
         return;
       }
 
@@ -106,6 +117,9 @@ if (forgotLink && modal && closeModal && resetBtn) {
       modal.style.display = "none";
     } catch (error) {
       alert("❌ Error: " + error.message.replace("Firebase:", ""));
+    } finally {
+      resetBtn.disabled = false;
+      resetBtn.textContent = "Send Reset Link";
     }
   });
 }
