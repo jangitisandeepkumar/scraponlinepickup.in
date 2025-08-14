@@ -8,15 +8,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="container">
-      <!-- Hamburger Menu (Top-Left) -->
-      <div class="hamburger-menu" onclick="goToProfilePage()">
+      <!-- Hamburger Menu (clickable in JS) -->
+      <div class="hamburger-menu">
         <i class="fa-solid fa-bars" aria-label="Open profile menu"></i>
       </div>
 
       <!-- Logo -->
       <a href="index.html" class="logo">Online Scrap</a>
+
+      <!-- Greeting -->
+      <span id="userGreeting" style="margin-left: 15px; font-weight: bold;"></span>
 
       <!-- Navigation -->
       <nav class="navigation">
@@ -94,31 +98,7 @@
     </div>
   </footer>
 
-  <!-- Script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Hamburger menu redirect
-      function goToProfilePage() {
-        window.location.href = "pro.html";
-      }
-
-      // Dark Mode Toggle
-      const darkModeToggle = document.getElementById("darkModeToggle");
-      const isDarkMode = localStorage.getItem("darkMode") === "enabled";
-      if (isDarkMode) {
-        document.body.classList.add("dark-mode");
-        darkModeToggle.setAttribute("aria-label", "Switch to light mode");
-        darkModeToggle.textContent = "☀️";
-      }
-      darkModeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        const isDark = document.body.classList.contains("dark-mode");
-        localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
-        darkModeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-        darkModeToggle.textContent = isDark ? "☀️" : "🌙";
-      });
-    });
-  </script>
+  <!-- Link to JS -->
+  <script type="module" src="index.js"></script>
 </body>
 </html>
-
