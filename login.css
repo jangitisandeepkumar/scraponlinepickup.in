@@ -1,4 +1,4 @@
-/* Reset and Base */
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
@@ -101,7 +101,7 @@ body {
   font-size: 14px;
 }
 
-/* Modal Styles */
+/* Modal Styles with Fade Animation */
 .modal {
   display: none;
   position: fixed;
@@ -112,6 +112,13 @@ body {
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  display: block;
+  opacity: 1;
 }
 
 .modal-content {
@@ -125,10 +132,24 @@ body {
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
 .close {
   float: right;
   font-size: 24px;
   cursor: pointer;
+}
+
+.close:hover {
+  color: red;
 }
 
 /* Footer */
@@ -149,6 +170,10 @@ body {
   }
 
   .logo {
+    font-size: 20px;
+  }
+
+  .form-card h2 {
     font-size: 20px;
   }
 }
