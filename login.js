@@ -36,14 +36,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
 
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    if (!user.emailVerified) {
-      alert("⚠️ Please verify your email before logging in.");
-      await signOut(auth);
-      return;
-    }
+    await signInWithEmailAndPassword(auth, email, password);
 
     alert("✅ Login successful!");
     const params = new URLSearchParams(window.location.search);
