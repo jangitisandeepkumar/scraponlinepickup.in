@@ -1,3 +1,5 @@
+// login.js
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
 import {
   getAuth,
@@ -39,9 +41,14 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     await signInWithEmailAndPassword(auth, email, password);
 
     alert("✅ Login successful!");
+
+    // 🔀 Redirect after login
     const params = new URLSearchParams(window.location.search);
     const redirect = params.get("redirect");
-    window.location.href = redirect ? redirect : "iron.html";
+
+    // Change "index.html" to another page if you want (like "history.html" or "admin.html")
+    window.location.href = redirect ? redirect : "index.html";
+
   } catch (error) {
     alert("❌ Login failed: " + error.message.replace("Firebase:", ""));
   }
