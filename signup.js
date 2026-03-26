@@ -15,7 +15,7 @@ import {
 
 // Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyCA-v0X9OzsToVlNHYBd1WRrOi01CWotVY",
+  apiKey: "YOUR_API_KEY",
   authDomain: "login-51a65.firebaseapp.com",
   projectId: "login-51a65",
   storageBucket: "login-51a65.appspot.com",
@@ -27,15 +27,13 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let currentUser = null;
-
 // Helper function to show error
 function showError(message) {
   const errorBox = document.getElementById("errorMsg");
   if (errorBox) {
     errorBox.innerText = message;
   } else {
-    alert(message); // fallback
+    alert(message);
   }
 }
 
@@ -48,27 +46,40 @@ document.getElementById("signup-form").addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
 
   try {
+    // 🔹 Step 1: Create user
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    currentUser = user;
 
-    // Save user data in Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      name,
-      email,
-      createdAt: new Date()
-    });
+    console.log("User created:", user.uid);
 
-    // Send verification email
+    // 🔹 Step 2: Save to Firestore (separate error handling)
+    try {
+      await setDoc(doc(db, "users", user.uid), {
+        name: name,
+        email: email,
+        createdAt: new Date()
+      });
+      console.log("User data saved to Firestore");
+    } catch (dbError) {
+      console.error("Firestore Error:", dbError);
+    }
+
+    // 🔹 Step 3: Send verification email
     await sendEmailVerification(user, {
       url: window.location.origin + "/login.html"
     });
 
-    alert("Verification email sent. Please check your inbox.");
+    alert("Signup successful! Verification email sent.");
 
+    // 🔹 Step 4: Logout user until verified
     await signOut(auth);
 
+    // Optional: redirect
+    window.location.href = "/login.html";
+
   } catch (error) {
+    console.error("Signup Error:", error);
+
     let message = "";
 
     switch (error.code) {
@@ -85,7 +96,7 @@ document.getElementById("signup-form").addEventListener("submit", async (e) => {
         break;
 
       default:
-        message = "Something went wrong. Please try again.";
+        message = error.message; // 🔥 SHOW REAL ERROR
     }
 
     showError(message);
@@ -121,6 +132,8 @@ document.getElementById("resend-verification").addEventListener("click", async (
     await signOut(auth);
 
   } catch (error) {
+    console.error("Resend Error:", error);
+
     let message = "";
 
     switch (error.code) {
@@ -137,7 +150,7 @@ document.getElementById("resend-verification").addEventListener("click", async (
         break;
 
       default:
-        message = "Failed to resend verification. Try again.";
+        message = error.message;
     }
 
     showError(message);
